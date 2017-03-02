@@ -34,4 +34,7 @@ class SnippetSerializer(serializers.ModelSerializer):
 		# field = ('id', 'title', 'code', 'linenos', 'language', 'style')
 		fields = '__all__'
 
-		# AssertionError: (u"Creating a ModelSerializer without either the 'fields' attribute or the 'exclude' attribute has been deprecated since 3.3.0, and is now disallowed. Add an explicit fields = '__all__' to the SnippetSerializer serializer.",)
+		# Following error is shown if __all__ is not used
+		# AssertionError: (u"Creating a ModelSerializer without either the 'fields' 
+		# attribute or the 'exclude' attribute has been deprecated since 3.3.0, and is now disallowed.
+		# Add an explicit fields = '__all__' to the SnippetSerializer serializer.",)
