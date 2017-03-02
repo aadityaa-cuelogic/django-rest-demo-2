@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, viewsets
 from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 
 # class SnippetSerializer(serializers.Serializer):
@@ -31,10 +31,14 @@ from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 class SnippetSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Snippet
-		# field = ('id', 'title', 'code', 'linenos', 'language', 'style')
+		# field = ('id', 'title', 'code', 'linenos', 'language', 'style',)
 		fields = '__all__'
 
 		# Following error is shown if __all__ is not used
 		# AssertionError: (u"Creating a ModelSerializer without either the 'fields' 
 		# attribute or the 'exclude' attribute has been deprecated since 3.3.0, and is now disallowed.
 		# Add an explicit fields = '__all__' to the SnippetSerializer serializer.",)
+
+class SnippetsViewSet(viewsets.ModelViewSet):
+	queryset = Snippet.objects.all()
+	serializer_class = SnippetSerializer

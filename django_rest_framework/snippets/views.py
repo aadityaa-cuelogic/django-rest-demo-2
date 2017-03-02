@@ -7,7 +7,6 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
-import pdb
 
 class JSONResponse(HttpResponse):
 	def __init__(self, data, **kwargs):
@@ -17,7 +16,6 @@ class JSONResponse(HttpResponse):
 
 @csrf_exempt
 def snippet_list(request):
-	pdb.set_trace()
 	if request.method == 'GET':
 		snippets = Snippet.objects.all()
 		serializer = SnippetSerializer(snippets, many=True)
