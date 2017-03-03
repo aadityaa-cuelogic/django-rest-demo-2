@@ -1,5 +1,6 @@
 from rest_framework import serializers, viewsets
 from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
+from django.contrib.auth.models import User
 
 # class SnippetSerializer(serializers.Serializer):
 # 	id = serializers.IntegerField(read_only=True)
@@ -33,12 +34,20 @@ class SnippetSerializer(serializers.ModelSerializer):
 		model = Snippet
 		# field = ('id', 'title', 'code', 'linenos', 'language', 'style',)
 		fields = '__all__'
+		# owner = serializers.ReadOnlyField(source='owner.username')
 
 		# Following error is shown if __all__ is not used
 		# AssertionError: (u"Creating a ModelSerializer without either the 'fields' 
 		# attribute or the 'exclude' attribute has been deprecated since 3.3.0, and is now disallowed.
 		# Add an explicit fields = '__all__' to the SnippetSerializer serializer.",)
 
-class SnippetsViewSet(viewsets.ModelViewSet):
-	queryset = Snippet.objects.all()
-	serializer_class = SnippetSerializer
+# class SnippetsViewSet(viewsets.ModelViewSet):
+# 	queryset = Snippet.objects.all()
+# 	serializer_class = SnippetSerializer
+
+class UserSerializer(serializers.ModelSerializer):
+	snippets = serializers.PrimaryKeyRelatedField(many=True,
+												 queryset=Snippet.objects.all())
+	class Meta:
+		model = User
+		fields = ('id', 'username', 'snippets')
